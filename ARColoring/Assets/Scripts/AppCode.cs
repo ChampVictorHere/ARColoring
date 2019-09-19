@@ -7,18 +7,13 @@ using UnityEngine.UI;
 public class AppCode : MonoBehaviour
 {
     public Text Ctext;
-    public GameObject[] players;
-    public string[] words;
+    public Mark[] marks;
     int n = 0;
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            players[i].SetActive(false);
-        }
-        players[n].SetActive(true);
-        Ctext.text = words[n];
+        marks[n].getObj(name).SetActive(true);
+        Ctext.text = marks[n].name;
         n = 1;
     }
 
@@ -27,19 +22,33 @@ public class AppCode : MonoBehaviour
     {
 
     }
-    public void OnClick() {
-        if (n < players.Length)
+    public void AppMethod()
+    {
+        if (n < marks.Length)
         {
-            players[n - 1].SetActive(false);
-            players[n].SetActive(true);
-            Ctext.text = words[n];
+            marks[n-1].getObj(name).SetActive(false);
+            marks[n].getObj(name).SetActive(true);
+            Ctext.text = marks[n].name;
             n++;
         }
-        else if (n >= players.Length) {
-            players[n-1].SetActive(false);
+        else if (n >= marks.Length)
+        {
+            marks[n - 1].getObj(name).SetActive(false);
             n = 1;
-            players[n-1].SetActive(true);
-            Ctext.text = words[n-1];
+            marks[n - 1].getObj(name).SetActive(true);
+            Ctext.text = marks[n-1].name;
         }
+    }
+}
+[Serializable]
+public class Mark
+{
+    [SerializeField]
+    public string name;
+    [SerializeField]
+    public GameObject gObject;
+    public GameObject getObj(string name)
+    {
+        return gObject;
     }
 }
